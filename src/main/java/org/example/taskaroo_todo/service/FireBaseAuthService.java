@@ -1,3 +1,4 @@
+// FireBaseAuthService.java
 package org.example.taskaroo_todo.service;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,7 +18,7 @@ public class FireBaseAuthService {
     public FirebaseToken verifyToken(String idToken) throws FirebaseAuthException {
         FirebaseToken decoded = FirebaseAuth.getInstance().verifyIdToken(idToken);
         User user = new User();
-        user.setFirebase_uid(decoded.getUid());
+        user.setFirebaseUid(decoded.getUid());
         user.setEmail(decoded.getEmail());
 
         userRepo.save(user);

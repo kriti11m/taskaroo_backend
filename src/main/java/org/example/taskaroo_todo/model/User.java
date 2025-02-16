@@ -6,28 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "users")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "users")
+@Component
 public class User {
-
-
     @Id
-    @Column(name="user_id",unique = true,nullable = false)
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int userid;
-    @Column(name = "email",unique = true,nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
+
+    @Column(name = "firebaseuid")
+    private String firebaseUid;
+
     private String email;
-    @Column(name="name")
     private String name;
-    @Column(name="password")
     private String password;
-    @Column(name="firebase_uid")
-    private String firebase_uid;
-
-
-
 }

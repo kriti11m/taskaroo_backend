@@ -1,6 +1,6 @@
 package org.example.taskaroo_todo.model;
 
-public enum status {
+public enum Status {
     COMPLETED,
     pending,
 
