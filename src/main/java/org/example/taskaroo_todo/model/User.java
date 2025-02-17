@@ -19,7 +19,7 @@ public class User {
 
     @Column(name = "firebaseuid")
     private String firebaseUid;
-
+@Column(name = "email",unique = true)
     private String email;
     private String name;
     private String password;
