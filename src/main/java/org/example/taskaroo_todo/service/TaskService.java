@@ -7,7 +7,6 @@ import org.example.taskaroo_todo.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,7 +29,7 @@ public class TaskService {
     public List<Task> ShowPendingTask(String gmail) {
         User user = userRepo.findByEmail(gmail);
         if (user != null) {
-            return new ArrayList<>(taskRepo.findAllByUserAndStatus(user, "pending"));
+            return taskRepo.findAllByUserAndStatus(user, "pending");
         } else {
             throw new IllegalArgumentException("User with Gmail " + gmail + " not found");
         }
@@ -39,10 +38,16 @@ public class TaskService {
     public List<Task> ShowCompletedTasks(String gmail) {
         User user = userRepo.findByEmail(gmail);
         if (user != null) {
-            return new ArrayList<>(taskRepo.findAllByUserAndStatus(user, "completed"));
+            return taskRepo.findAllByUserAndStatus(user, "completed");
         } else {
             throw new IllegalArgumentException("User with Gmail " + gmail + " not found");
         }
+    }
 
+    public void done(int id) {
+        taskRepo.findById((long) id).ifPresent(task -> {
+            task.setStatus("completed");
+            taskRepo.save(task);
+        });
     }
 }
