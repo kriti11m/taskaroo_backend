@@ -29,7 +29,7 @@ public class Task {
     @Column(name = "notes")
     private String Notes;
     @Column(name = "status")
-    private Status status = Status.pending;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

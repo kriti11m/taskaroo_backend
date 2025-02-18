@@ -21,7 +21,7 @@ public class signupController {
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> signup(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        signupService.signup(name, email, password);
+        signupService.signup(name, email, password);;
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("message", "User created");
