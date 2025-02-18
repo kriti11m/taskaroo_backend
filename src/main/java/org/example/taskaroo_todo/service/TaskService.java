@@ -35,4 +35,14 @@ public class TaskService {
             throw new IllegalArgumentException("User with Gmail " + gmail + " not found");
         }
     }
+
+    public List<Task> ShowCompletedTasks(String gmail) {
+        User user = userRepo.findByEmail(gmail);
+        if (user != null) {
+            return new ArrayList<>(taskRepo.findAllByUserAndStatus(user, "completed"));
+        } else {
+            throw new IllegalArgumentException("User with Gmail " + gmail + " not found");
+        }
+
+    }
 }

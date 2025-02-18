@@ -32,4 +32,12 @@ public class TaskController {
         response.put("tasks", tasks);
         return tasks;
     }
+    @GetMapping("/completedTask")
+    public List completedTasks(@RequestParam String gmail) {
+        List<Task> tasks = taskService.ShowCompletedTasks(gmail);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("tasks", tasks);
+        return tasks;
+    }
 }
