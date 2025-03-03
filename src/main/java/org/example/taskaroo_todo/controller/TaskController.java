@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
 public class TaskController {
     @Autowired
@@ -17,6 +17,7 @@ public class TaskController {
 
     @PostMapping("/addTask")
     public ResponseEntity<Map<String, Object>> addTask(@RequestBody Task task, @RequestParam String gmail) {
+        task.setStatus("pending");
         taskService.addTask(task, gmail);
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
@@ -25,16 +26,16 @@ public class TaskController {
     }
 
     @GetMapping("/pendingTask")
-    public List pendingTask(@RequestParam String gmail) {
-        List<Task> tasks = taskService.ShowPendingTask(gmail);
+    public ResponseEntity<Map<String, Object>> pendingTask(@RequestParam String email) {
+        List<Task> tasks = taskService.ShowPendingTask(email);
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("tasks", tasks);
-        return tasks;
+        return ResponseEntity.ok(response);
     }
     @GetMapping("/completedTask")
-    public List completedTasks(@RequestParam String gmail) {
-        List<Task> tasks = taskService.ShowCompletedTasks(gmail);
+    public List completedTasks(@RequestParam String email) {
+        List<Task> tasks = taskService.ShowCompletedTasks(email);
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("tasks", tasks);

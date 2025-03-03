@@ -7,7 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(
+        origins = "http://localhost:3000",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST}
+)
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
@@ -22,4 +26,4 @@ public class AuthController {
             return ResponseEntity.status(401).body("Invalid token");
         }
     }
-}
+}   

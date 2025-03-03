@@ -14,10 +14,10 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://127.0.0.1:5500") // Add your frontend URLs here
+                        .allowedOrigins("http://127.0.0.1:5500","https://ottawa-zambia-bar-ashley.trycloudflare.com/","http://localhost:3000/") // Add your frontend URLs here
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true)
+                        .allowCredentials(false)
                         .maxAge(3600); // This caches the preflight response for 1 hour
             }
         };
