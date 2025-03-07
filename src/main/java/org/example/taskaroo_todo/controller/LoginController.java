@@ -17,9 +17,18 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> login(@RequestParam String email, @RequestParam String password) {
         String verify=loginService.check(email,password);
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", true);
-        response.put("message", "verified");
-        return ResponseEntity.ok(response);
+        if(verify.equals("Login successful")){
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Login successful");
+            return ResponseEntity.ok(response);
+        }
+        else{
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Login failed");
+            return ResponseEntity.ok(response);
+        }
+
     }
 }
