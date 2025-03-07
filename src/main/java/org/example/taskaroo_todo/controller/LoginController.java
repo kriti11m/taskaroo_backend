@@ -16,8 +16,8 @@ public class LoginController {
     private LoginService loginService;
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> login(@RequestParam String email, @RequestParam String password) {
-        String verify=loginService.check(email,password);
-        if(verify.equals("Login successful")){
+        Boolean verify=loginService.check(email,password);
+        if(verify){
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "Login successful");

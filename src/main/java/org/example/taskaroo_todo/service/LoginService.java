@@ -8,17 +8,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
     @Autowired
-    UserRepo userRepo;
-    @Autowired
-    private User user;
-    public String check(String email, String password) {
-      user=userRepo.findByEmailAndPassword(email, password);
-      if(user!=null){
-          return "Login successful";
-      }
-      else{
-          return "Login failed";
-      }
+    private UserRepo userRepo;
 
+    public Boolean check(String email, String password) {
+        User user = userRepo.findByEmail(email);
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
