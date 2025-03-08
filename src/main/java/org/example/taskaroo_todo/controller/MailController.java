@@ -29,7 +29,7 @@ public class MailController {
         }
         else {
             String subject = "Password Reset";
-            String text = "click here to reset your password  http://127.0.0.1:5500/docs/taskaroo9.html";
+            String text = "click here to reset your password  https://kriti11m.github.io/taskaroo_frontend/taskaroo9.html";
             mailService.sendEmail(email, subject, text);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
