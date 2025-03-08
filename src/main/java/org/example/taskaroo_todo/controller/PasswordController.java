@@ -19,8 +19,8 @@ public class PasswordController {
     @Autowired
     private PasswordService passwordService;
     @PutMapping("/reset")
-    public ResponseEntity<?> reset(@RequestParam String email, @RequestParam String newPass, @RequestParam String confirmPass) {
-       Boolean status= passwordService.reset(email, newPass, confirmPass);
+    public ResponseEntity<?> reset(@RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
+       Boolean status= passwordService.reset(email, password, confirmPassword);
         if(status) {
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
