@@ -17,22 +17,39 @@ public class GoogleOAuthConfig {
 
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        InputStream credentialStream;
+        InputStream credentialStream = null;
 
-        // First try to load from Render's secret location
-        File renderSecretFile = new File("/etc/secrets/serviceAccountKey.json");
-        if (renderSecretFile.exists()) {
-            credentialStream = new FileInputStream(renderSecretFile);
-        } else {
-            // Fallback to classpath resource for local development
-            ClassPathResource resource = new ClassPathResource("serviceAccountKey.json");
+        try {
+            // First try to load serviceAccount.json from resources for local development
+            ClassPathResource resource = new ClassPathResource("serviceAccount.json");
             credentialStream = resource.getInputStream();
+        } catch (IOException e) {
+            // If local resource fails, try production paths
+
+            // Try Render's secret location
+            File renderSecretFile = new File("/etc/secrets/serviceAccountKey.json");
+            if (renderSecretFile.exists()) {
+                credentialStream = new FileInputStream(renderSecretFile);
+            } else {
+                // Try firebase-service-account.json next
+                File firebaseServiceAccount = new File("src/main/resources/firebase-service-account.json");
+                if (firebaseServiceAccount.exists()) {
+                    credentialStream = new FileInputStream(firebaseServiceAccount);
+                } else {
+                    throw new IOException("No Firebase service account file found");
+                }
+            }
         }
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(credentialStream))
                 .build();
 
-        return FirebaseApp.initializeApp(options);
+        // Safely handle if Firebase is already initialized
+        if (FirebaseApp.getApps().isEmpty()) {
+            return FirebaseApp.initializeApp(options);
+        } else {
+            return FirebaseApp.getInstance();
+        }
     }
 }
